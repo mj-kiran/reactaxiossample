@@ -1,23 +1,47 @@
-import logo from './logo.svg';
 import './App.css';
-
+import './bootstrap.min.css'
+import Button from 'react-bootstrap/Button';
+import axios from 'axios'
+import Table from 'react-bootstrap/Table';
+import{useState }from 'react'
 function App() {
+  const[state,setState]=useState([])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Hello World</h1>
+      <Button variant="outline-secondary" onClick={()=>{
+        axios.get('https://jsonplaceholder.typicode.com/posts').then((response)=>{
+          // console.log(response.data)
+          setState(response.data)
+
+        })
+        }
+      }>Click Here!!!</Button>
+      {state.map((obj,index)=>{
+        return(
+          <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Body</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{index+1}</td>
+          <td>{obj.title}</td>
+          <td>{obj.body}</td>
+          
+        </tr>
+       
+      </tbody>
+    </Table>
+        )
+      })}
+
+      
     </div>
   );
 }
